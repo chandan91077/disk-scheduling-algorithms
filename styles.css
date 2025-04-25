@@ -1,0 +1,106 @@
+/* Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+/* Navbar Styles */
+.nav-link {
+    @apply px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300;
+}
+
+.nav-link.active {
+    @apply text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-gray-700;
+}
+
+.nav-link-mobile {
+    @apply block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300;
+}
+
+.nav-link-mobile.active {
+    @apply text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-gray-700;
+}
+
+/* Button Styles */
+.btn-primary {
+    @apply inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300;
+}
+
+.btn-secondary {
+    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:text-blue-300 dark:bg-blue-900 dark:hover:bg-blue-800 transition-colors duration-300;
+}
+
+/* Input Field Styles */
+.input-field {
+    @apply px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-colors duration-300;
+}
+
+/* Algorithm Card Styles */
+.algorithm-card {
+    @apply bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300;
+}
+
+.algorithm-icon {
+    @apply inline-flex items-center justify-center h-12 w-12 rounded-full mb-4;
+}
+
+.algorithm-title {
+    @apply text-lg font-semibold text-gray-800 dark:text-white mb-2;
+}
+
+.algorithm-description {
+    @apply text-gray-600 dark:text-gray-300;
+}
+
+/* Animation for cards */
+.algorithm-card {
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.algorithm-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Theme toggle switch */
+#toggle:checked ~ .dot {
+    transform: translateX(100%);
+    @apply bg-blue-600;
+}
+
+/* Tooltip styles */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .btn-primary, .btn-secondary {
+        @apply w-full justify-center;
+    }
+}

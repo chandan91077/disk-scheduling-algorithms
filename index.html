@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disk Scheduling Simulator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Navbar -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-blue-600 dark:text-blue-400">Disk Scheduling Simulator</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#algorithms" class="nav-link">Algorithms</a>
+                    <a href="#simulation" class="nav-link">Simulation</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <button id="theme-toggle" class="p-2 rounded-full focus:outline-none">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block text-yellow-300"></i>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="p-2 rounded-md focus:outline-none">
+                        <i class="fas fa-bars text-gray-800 dark:text-white"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 pb-3 px-2">
+            <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium nav-link-mobile active">Home</a>
+            <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium nav-link-mobile">About</a>
+            <a href="#algorithms" class="block px-3 py-2 rounded-md text-base font-medium nav-link-mobile">Algorithms</a>
+            <a href="#simulation" class="block px-3 py-2 rounded-md text-base font-medium nav-link-mobile">Simulation</a>
+            <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium nav-link-mobile">Contact</a>
+            <div class="px-3 py-2">
+                <button id="theme-toggle-mobile" class="flex items-center">
+                    <span class="mr-2">Dark Mode</span>
+                    <div class="relative">
+                        <input type="checkbox" id="toggle" class="sr-only">
+                        <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                        <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">Disk Scheduling Algorithm Simulator</h1>
+                <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Visualize and understand different disk scheduling algorithms with interactive simulations.
+                </p>
+                <a href="#simulation" class="btn-primary">Start Simulation</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-800">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">About Disk Scheduling</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">What is Disk Scheduling?</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Disk scheduling is done by operating systems to schedule I/O requests arriving for the disk. 
+                            The goal of disk scheduling algorithms is to minimize the seek time and maximize the disk bandwidth.
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Why is it Important?</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Disk scheduling is crucial because the speed of the disk system is much slower compared to the main memory and CPU. 
+                            Efficient scheduling can significantly improve overall system performance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Algorithms Section -->
+        <section id="algorithms" class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">Disk Scheduling Algorithms</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- FCFS Card -->
+                    <div class="algorithm-card">
+                        <div class="algorithm-icon bg-blue-100 dark:bg-blue-900">
+                            <i class="fas fa-list-ol text-blue-600 dark:text-blue-300"></i>
+                        </div>
+                        <h3 class="algorithm-title">FCFS</h3>
+                        <p class="algorithm-description">
+                            First Come First Serve - Requests are served in the order they arrive.
+                        </p>
+                        <div class="mt-4">
+                            <span class="font-semibold">Advantages:</span> Simple, fair
+                        </div>
+                        <div class="mt-2">
+                            <span class="font-semibold">Disadvantages:</span> Poor performance
+                        </div>
+                    </div>
+
+                    <!-- SSTF Card -->
+                    <div class="algorithm-card">
+                        <div class="algorithm-icon bg-green-100 dark:bg-green-900">
+                            <i class="fas fa-bullseye text-green-600 dark:text-green-300"></i>
+                        </div>
+                        <h3 class="algorithm-title">SSTF</h3>
+                        <p class="algorithm-description">
+                            Shortest Seek Time First - The closest request is served next.
+                        </p>
+                        <div class="mt-4">
+                            <span class="font-semibold">Advantages:</span> Better performance than FCFS
+                        </div>
+                        <div class="mt-2">
+                            <span class="font-semibold">Disadvantages:</span> Starvation possible
+                        </div>
+                    </div>
+
+                    <!-- SCAN Card -->
+                    <div class="algorithm-card">
+                        <div class="algorithm-icon bg-purple-100 dark:bg-purple-900">
+                            <i class="fas fa-arrows-alt-v text-purple-600 dark:text-purple-300"></i>
+                        </div>
+                        <h3 class="algorithm-title">SCAN</h3>
+                        <p class="algorithm-description">
+                            Elevator Algorithm - The disk arm moves in one direction, serving requests along the way.
+                        </p>
+                        <div class="mt-4">
+                            <span class="font-semibold">Advantages:</span> No starvation, good performance
+                        </div>
+                        <div class="mt-2">
+                            <span class="font-semibold">Disadvantages:</span> Long wait for some requests
+                        </div>
+                    </div>
+
+                    <!-- C-SCAN Card -->
+                    <div class="algorithm-card">
+                        <div class="algorithm-icon bg-yellow-100 dark:bg-yellow-900">
+                            <i class="fas fa-redo text-yellow-600 dark:text-yellow-300"></i>
+                        </div>
+                        <h3 class="algorithm-title">C-SCAN</h3>
+                        <p class="algorithm-description">
+                            Circular SCAN - The arm moves in one direction, then jumps back to the start.
+                        </p>
+                        <div class="mt-4">
+                            <span class="font-semibold">Advantages:</span> More uniform wait time
+                        </div>
+                        <div class="mt-2">
+                            <span class="font-semibold">Disadvantages:</span> More movement than SCAN
+                        </div>
+                    </div>
+
+                    <!-- LOOK Card -->
+                    <div class="algorithm-card">
+                        <div class="algorithm-icon bg-red-100 dark:bg-red-900">
+                            <i class="fas fa-search text-red-600 dark:text-red-300"></i>
+                        </div>
+                        <h3 class="algorithm-title">LOOK</h3>
+                        <p class="algorithm-description">
+                            Similar to SCAN but only goes as far as the last request in each direction.
+                        </p>
+                        <div class="mt-4">
+                            <span class="font-semibold">Advantages:</span> Less movement than SCAN
+                        </div>
+                        <div class="mt-2">
+                            <span class="font-semibold">Disadvantages:</span> Still has some inefficiency
+                        </div>
+                    </div>
+
+                    <!-- C-LOOK Card -->
+                    <div class="algorithm-card">
+                        <div class="algorithm-icon bg-indigo-100 dark:bg-indigo-900">
+                            <i class="fas fa-exchange-alt text-indigo-600 dark:text-indigo-300"></i>
+                        </div>
+                        <h3 class="algorithm-title">C-LOOK</h3>
+                        <p class="algorithm-description">
+                            Similar to C-SCAN but only goes as far as the last request before reversing.
+                        </p>
+                        <div class="mt-4">
+                            <span class="font-semibold">Advantages:</span> Most efficient of all
+                        </div>
+                        <div class="mt-2">
+                            <span class="font-semibold">Disadvantages:</span> More complex to implement
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Simulation Section -->
+        <section id="simulation" class="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-800">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">Simulation</h2>
+                
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Input Panel -->
+                    <div class="lg:col-span-1 bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Simulation Parameters</h3>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label for="request-queue" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Request Queue (comma separated numbers)
+                                </label>
+                                <input type="text" id="request-queue" 
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
+                                    value="98, 183, 37, 122, 14, 124, 65, 67">
+                            </div>
+                            
+                            <div>
+                                <label for="initial-head" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Initial Head Position
+                                </label>
+                                <input type="number" id="initial-head" 
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
+                                    value="53">
+                            </div>
+                            
+                            <div>
+                                <label for="cylinders" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Total Number of Cylinders
+                                </label>
+                                <input type="number" id="cylinders" 
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
+                                    value="200">
+                            </div>
+                            
+                            <div>
+                                <label for="algorithm" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Scheduling Algorithm
+                                </label>
+                                <select id="algorithm" 
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white">
+                                    <option value="FCFS">FCFS (First Come First Serve)</option>
+                                    <option value="SSTF">SSTF (Shortest Seek Time First)</option>
+                                    <option value="SCAN">SCAN (Elevator Algorithm)</option>
+                                    <option value="C-SCAN">C-SCAN (Circular SCAN)</option>
+                                    <option value="LOOK">LOOK</option>
+                                    <option value="C-LOOK">C-LOOK</option>
+                                </select>
+                            </div>
+                            
+                            <div class="pt-2">
+                                <button id="start-simulation" class="btn-primary w-full">
+                                    Start Simulation
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Visualization Panel -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Disk Head Movement</h3>
+                            <div class="relative h-64">
+                                <canvas id="disk-visualization" class="w-full h-full border border-gray-300 dark:border-gray-600 rounded"></canvas>
+                                <div id="disk-controls" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-4 opacity-0 transition-opacity duration-300">
+                                    <button id="pause-simulation" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                                        <i class="fas fa-pause"></i> Pause
+                                    </button>
+                                    <button id="resume-simulation" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md hidden">
+                                        <i class="fas fa-play"></i> Resume
+                                    </button>
+                                    <button id="reset-simulation" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md">
+                                        <i class="fas fa-redo"></i> Reset
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Simulation Results</h3>
+                            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                <div class="bg-white dark:bg-gray-600 p-4 rounded-md shadow">
+                                    <div class="text-sm text-gray-500 dark:text-gray-300">Total Seek Time</div>
+                                    <div id="total-seek-time" class="text-2xl font-bold text-blue-600 dark:text-blue-400">-</div>
+                                </div>
+                                <div class="bg-white dark:bg-gray-600 p-4 rounded-md shadow">
+                                    <div class="text-sm text-gray-500 dark:text-gray-300">Request Sequence</div>
+                                    <div id="request-sequence" class="text-sm font-mono truncate">-</div>
+                                </div>
+                            </div>
+                            
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+                                    <thead class="bg-gray-100 dark:bg-gray-600">
+                                        <tr>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Step</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Current Position</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Next Request</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Seek Time</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Total Seek Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="results-table" class="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-600">
+                                        <tr>
+                                            <td colspan="5" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">No simulation data yet</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="mt-4 flex justify-end">
+                                <button id="download-report" class="btn-secondary">
+                                    <i class="fas fa-download mr-2"></i> Download Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">Contact Us</h2>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 max-w-3xl mx-auto">
+                    <form id="contact-form">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
+                                <input type="text" id="name" class="w-full input-field" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                                <input type="email" id="email" class="w-full input-field" required>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Subject</label>
+                            <input type="text" id="subject" class="w-full input-field" required>
+                        </div>
+                        <div class="mt-6">
+                            <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Message</label>
+                            <textarea id="message" rows="4" class="w-full input-field" required></textarea>
+                        </div>
+                        <div class="mt-6">
+                            <button type="submit" class="btn-primary w-full">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-center md:text-left mb-4 md:mb-0">
+                    <span class="text-lg font-bold text-blue-600 dark:text-blue-400">Disk Scheduling Simulator</span>
+                    <p class="text-gray-600 dark:text-gray-400 mt-1">Visualizing disk scheduling algorithms for better understanding</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-gray-500 dark:text-gray-400 text-sm">
+                &copy; 2023 Disk Scheduling Simulator. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
